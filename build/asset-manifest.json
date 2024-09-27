@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.35a66046.css",
+    "main.js": "/static/js/main.e1b2d455.js",
+    "static/js/453.3453ed5b.chunk.js": "/static/js/453.3453ed5b.chunk.js",
+    "static/media/loginBackground.jpeg": "/static/media/loginBackground.f4b7c1bc6fd451340f4e.jpeg",
+    "static/media/Samaritas-logo.png": "/static/media/Samaritas-logo.d0695b97b537789601c0.png",
+    "index.html": "/index.html",
+    "main.35a66046.css.map": "/static/css/main.35a66046.css.map",
+    "main.e1b2d455.js.map": "/static/js/main.e1b2d455.js.map",
+    "453.3453ed5b.chunk.js.map": "/static/js/453.3453ed5b.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.35a66046.css",
+    "static/js/main.e1b2d455.js"
+  ]
+}

@@ -1,10 +1,10 @@
-var sql  = require("../DB_Connection/RefugeeDB");
+var sql = require("../DB_Connection/RefugeeDB");
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
-const secretKey = process.env.ACCESS_TOKEN_SECRET ;
-const refreshTokenSecretKey = process.env.REFRESH_TOKEN_SECRET ;
+const secretKey = process.env.ACCESS_TOKEN_SECRET;
+const refreshTokenSecretKey = process.env.REFRESH_TOKEN_SECRET;
 
 const postRefugee = async (req, res) => {
     try {
@@ -21,7 +21,7 @@ const postRefugee = async (req, res) => {
         }
 
         // Validate role
-        if (!['Case Agent', 'Refugee','Admin'].includes(role)) {
+        if (!['Case Agent', 'Refugee', 'Admin'].includes(role)) {
             return res.status(400).json({ statusCode: 400, message: 'Invalid role. Must be either "Case Agent" or "Refugee".' });
         }
 
@@ -124,13 +124,13 @@ const loginRefugee = async (req, res) => {
             { expiresIn: '1h' }
         );
 
-              
+
         // Send the response with both tokens
         res.status(200).json({
             statusCode: 200,
             message: 'Login successful',
             accessToken,
-           
+
         });
 
     } catch (error) {
@@ -142,12 +142,13 @@ const loginRefugee = async (req, res) => {
 const getAllRefugeesByRoleAndId = async (req, res) => {
     try {
         const userRole = req.data?.role; // Extract user role from token data
-        const userId = req.data?.UserId; // Extract userId from token data
+        const userId = req.data?.id; // Extract userId from token data
 
         // Check if the user is a Refugee and deny access
         if (userRole === 'Refugee') {
             return res.status(403).send({ message: "Forbidden: Refugees are not allowed to access this data", success: false });
         }
+        
 
         // Get the role and UserId from query parameters
         const { role, UserId } = req.query;
@@ -155,6 +156,8 @@ const getAllRefugeesByRoleAndId = async (req, res) => {
         // Initialize the base query and parameters
         let query = 'SELECT * FROM Users_Registration WHERE 1=1'; // Changed to "WHERE 1=1" for easier dynamic querying
         const queryParams = [];
+        console.log('User role:', userRole);
+console.log('User ID:', userId);
 
         // Handle access based on roles
         if (userRole === 'Case Agent') {
@@ -192,6 +195,7 @@ const getAllRefugeesByRoleAndId = async (req, res) => {
 
         // Execute the query
         const result = await request.query(query);
+        console.log(result, 'result');
 
         // Send a success response with the list of users/refugees
         res.status(200).json({
@@ -207,4 +211,8 @@ const getAllRefugeesByRoleAndId = async (req, res) => {
 };
 
 
-module.exports = {postRefugee,loginRefugee,getAllRefugeesByRoleAndId};
+
+
+
+
+module.exports = { postRefugee, loginRefugee, getAllRefugeesByRoleAndId, };

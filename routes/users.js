@@ -10,7 +10,8 @@ const { verifyJwt } = require('../VerifyJWT');
 // User APi Routes
 router.post('/Register', user.postRefugee);
 router.post('/Login', user.loginRefugee);
-router.get('/getUserByRoleID',user.getAllRefugeesByRoleAndId);
+router.get('/getUserByRoleID',verifyJwt,user.getAllRefugeesByRoleAndId);
+
 
 // Chat Api Routes
 router.post('/sendMessages', Messages.postChatMessage);

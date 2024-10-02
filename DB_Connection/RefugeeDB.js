@@ -1,16 +1,18 @@
+require('dotenv').config();
+
 const sql = require('mssql');
 
 // Configuration for the MS SQL Server connection
 const config = {
-    user: 'na-app-user', // SQL Server username
-    password: 'Miracle#123', // SQL Server password
-    server: 'newamericans-app.database.windows.net', // Use your server's IP address or hostname (e.g., 'localhost' for local development)
-    database: 'na-app', // Your database name
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    server: process.env.DB_SERVER,
+    database: process.env.DB_DATABASE,
     options: {
-        trustServerCertificate: true, // For development environments with self-signed certs
-        enableArithAbort: true, // Ensures compatibility for certain environments
+        trustServerCertificate: true,
+        enableArithAbort: true,
     },
-    port: 1433 // Default port for MS SQL Server
+    port: parseInt(process.env.DB_PORT, 10) || 1433, // Ensure the port is a number
 };
 
 // Connect to the database

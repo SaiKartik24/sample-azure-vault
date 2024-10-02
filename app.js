@@ -19,25 +19,9 @@ app.use(session({
 
 const passport = require("passport");
 
-
-
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors());
-
-app.use(express.static(path.resolve(__dirname, "build")));
-app.get("*", (req, res) => {
-  console.log(path.join(__dirname, "build/index.html"));
-  
-  res.sendFile(path.join(__dirname, "build/index.html"));
-  
-});
-
-
-// Your routes and other middleware
-app.get('/', (req, res) => {
-  res.send('Home Page');
-});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -49,15 +33,16 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// API routes come first
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-// catch 404 and forward to error handler
+// Catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
 });
 
-// error handler
+// Error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
@@ -68,6 +53,12 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+// Serve React app static files after API routes
+app.use(express.static(path.resolve(__dirname, "build")));
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build/index.html"));
+});
+
 app.use((err, req, res, next) => {
   res.status(err.status || 500).json({
       statusCode: err.status || 500,
@@ -75,14 +66,22 @@ app.use((err, req, res, next) => {
   });
 });
 
+app.use(cors({
+  origin: 'https://newamericans-demo-h3a4aqbsh6asemcp.eastus2-01.azurewebsites.net',
+  credentials: true,
+}));
 
-app.use((err, req, res, next) => {
-    console.error(err.stack);
-    res.status(err.status || 500).json({
-        statusCode: err.status || 500,
-        message: err.message || 'Internal server error',
-    });
+app.use(function(err, req, res, next) {
+  console.error('Error details:', {
+    statusCode: err.status || 500,
+    message: err.message,
+    stack: err.stack // This will show you the stack trace in the console
+  });
+
+  res.status(err.status || 500).json({
+    statusCode: err.status || 500,
+    message: err.message || 'Internal server error',
+  });
 });
-
 
 module.exports = app;

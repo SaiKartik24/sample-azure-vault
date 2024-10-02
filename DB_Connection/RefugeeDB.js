@@ -12,7 +12,7 @@ const config = {
         trustServerCertificate: true,
         enableArithAbort: true,
     },
-    port: 1433, // Ensure the port is a number
+    
 };
 
 // Connect to the database

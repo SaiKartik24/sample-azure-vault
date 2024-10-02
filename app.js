@@ -5,7 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
 
-var indexRouter = require('./routes/index');
+// var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
 var app = express();
@@ -31,16 +31,16 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
 // API routes come first
-app.use('/', indexRouter);
+// app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
 // Catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  next(createError(404));
-});
+// app.use(function(req, res, next) {
+//   next(createError(404));
+// });
 
 // Error handler
 app.use(function(err, req, res, next) {
@@ -55,33 +55,33 @@ app.use(function(err, req, res, next) {
 
 // Serve React app static files after API routes
 app.use(express.static(path.resolve(__dirname, "build")));
-app.get("*", (req, res) => {
+app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "build/index.html"));
 });
 
-app.use((err, req, res, next) => {
-  res.status(err.status || 500).json({
-      statusCode: err.status || 500,
-      message: err.message || 'Internal server error',
-  });
-});
+// app.use((err, req, res, next) => {
+//   res.status(err.status || 500).json({
+//       statusCode: err.status || 500,
+//       message: err.message || 'Internal server error',
+//   });
+// });
 
 app.use(cors({
   origin: 'https://newamericans-demo-h3a4aqbsh6asemcp.eastus2-01.azurewebsites.net',
   credentials: true,
 }));
 
-app.use(function(err, req, res, next) {
-  console.error('Error details:', {
-    statusCode: err.status || 500,
-    message: err.message,
-    stack: err.stack // This will show you the stack trace in the console
-  });
+// app.use(function(err, req, res, next) {
+//   console.error('Error details:', {
+//     statusCode: err.status || 500,
+//     message: err.message,
+//     stack: err.stack // This will show you the stack trace in the console
+//   });
 
-  res.status(err.status || 500).json({
-    statusCode: err.status || 500,
-    message: err.message || 'Internal server error',
-  });
-});
+//   res.status(err.status || 500).json({
+//     statusCode: err.status || 500,
+//     message: err.message || 'Internal server error',
+//   });
+// });
 
 module.exports = app;

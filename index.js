@@ -13,10 +13,10 @@ app.get('/api/users', (req, res) => {
   res.json(users);
 });
 
-if (process.env.NODE_ENV !== 'test') {
+// if (process.env.NODE_ENV !== 'test') {
+//}
   app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}/`);
   });
-}
 
 module.exports = app;

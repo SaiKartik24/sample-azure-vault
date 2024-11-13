@@ -9,6 +9,7 @@ const users = [
 ];
 
 app.get('/api/users', (req, res) => {
+  console.log(users)
   res.json(users);
 });
 

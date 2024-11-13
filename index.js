@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const port = 3000;
+//const port = 3000;
 
 const users = [
   { id: 1, name: 'Alice', email: 'alice@example.com' },
@@ -13,10 +13,8 @@ app.get('/api/users', (req, res) => {
   res.json(users);
 });
 
-// if (process.env.NODE_ENV !== 'test') {
-//}
-  app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}/`);
+  app.listen(process.env.PORT, () => {
+    console.log(`Server running at http://localhost:${process.env.PORT}/`);
   });
 
 module.exports = app;
